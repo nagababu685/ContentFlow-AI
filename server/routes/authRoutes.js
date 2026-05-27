@@ -8,10 +8,11 @@ const {
   updateProfile,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
+const { registerValidation, loginValidation, validate } = require('../middleware/validate');
 
-// Public routes — no authentication required
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+// Public routes — with input validation
+router.post('/register', registerValidation, validate, registerUser);
+router.post('/login', loginValidation, validate, loginUser);
 router.post('/logout', logoutUser);
 
 // Protected routes — requires valid JWT cookie
